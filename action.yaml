@@ -1,0 +1,63 @@
+name: "Protolint"
+description: "Run protolint on the repository"
+author: "Frequenz Energy-as-a-Service GmbH"
+
+# Refer to the following link(s) for more information on inputs:
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#inputs
+inputs:
+  submodules:
+    description: >
+      Whether to checkout submodules: `true` (default) to checkout submodules
+      or `recursive` to recursively checkout submodules, and `false` to not
+      checkout submodules.
+
+      Passed directly to the `actions/checkout` action, check its documentation for
+      more information.
+    required: false
+    default: "true"
+  checkout_token:
+    description: >
+      The token to use for fetching the repository and submodules. Uses
+      secrets.github_token by default.
+    required: false
+    default: ${{ secrets.github_token }}
+  api_token:
+    description: >
+      The token to use to make comments and annotations to pull requests.
+      Uses secrets.github_token by default.
+    required: false
+    default: ${{ secrets.github_token }}
+  protolint_flags:
+    description: >
+      The flags to pass to protolint. At least the path to the proto files
+      should be passed. Defaults to `proto/`.
+      `proto` directory.
+    required: false
+    default: "proto/"
+  protolint_version:
+    description: >
+      The version of protolint to use. If not set, the latest version will be
+      used.
+    required: false
+    default: "0.46.3"
+
+# Refer to the following link(s) for more information on the composite run steps:
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#runs
+runs:
+  using: "composite"
+  steps:
+    - name: Fetch sources
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      with:
+        token: ${{ inputs.checkout_token }}
+        submodules: ${{ inputs.submodules }}
+
+    - name: Run protolint
+      uses: yoheimuta/action-protolint@14d53bef00d0e0c09f74d0f0c1b3ce639d86ca58 # v1.2.0
+      with:
+        fail_on_error: true
+        filter_mode: nofilter
+        github_token: ${{ inputs.api_token }}
+        protolint_flags: ${{ inputs.protolint_flags }}
+        protolint_version: ${{ inputs.protolint_version }}
+        reporter: github-check
