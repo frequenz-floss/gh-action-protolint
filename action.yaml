@@ -18,9 +18,9 @@ inputs:
   github_token:
     description: >
       The token to use to make comments and annotations to pull requests.
-      Uses secrets.github_token by default.
+      Uses github.token by default.
     required: false
-    default: ${{ secrets.github_token }}
+    default: ${{ github.token }}
   protolint_flags:
     description: >
       The flags to pass to protolint. At least the path to the proto files

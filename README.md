@@ -20,7 +20,7 @@ jobs:
 ```
 
 By default, the action will checkout submodules (non-recursively) and use the
-`secrets.github_token` to do GitHub API calls to comment in PRs for example. It
+`github.token` to do GitHub API calls to comment in PRs for example. It
 looks for proto files in the `proto/` directory and uses a fixed protolint
 version (please look at the [`action.yml`](./action.yml) file for the current
 version).
