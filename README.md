@@ -16,7 +16,7 @@ jobs:
       - name: Fetch sources
         uses: actions/checkout@v4
       - name: Run protolint
-        uses: frequenz-io/gh-action-protolint@v0.x.x
+        uses: frequenz-floss/gh-action-protolint@v0.x.x
 ```
 
 By default, the action will checkout submodules (non-recursively) and use the
@@ -37,7 +37,7 @@ jobs:
       - name: Fetch sources
         uses: actions/checkout@v4
       - name: Run protolint
-        uses: frequenz-io/gh-action-protolint@v0.x.x
+        uses: frequenz-floss/gh-action-protolint@v0.x.x
         with:
           github_token: ${{ secrets.my_api_token }}
           protolint_flags: "-config_path=.github/protolint.yaml proto/"
