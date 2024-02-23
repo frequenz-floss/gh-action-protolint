@@ -1,5 +1,5 @@
 name: "Protolint"
-description: "Run protolint on the repository"
+description: "Run protolint with some custom options"
 author: "Frequenz Energy-as-a-Service GmbH"
 
 # Refer to the following link(s) for more information on inputs:
@@ -15,13 +15,7 @@ inputs:
       more information.
     required: false
     default: "true"
-  checkout_token:
-    description: >
-      The token to use for fetching the repository and submodules. Uses
-      secrets.github_token by default.
-    required: false
-    default: ${{ secrets.github_token }}
-  api_token:
+  github_token:
     description: >
       The token to use to make comments and annotations to pull requests.
       Uses secrets.github_token by default.
@@ -46,18 +40,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Fetch sources
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      with:
-        token: ${{ inputs.checkout_token }}
-        submodules: ${{ inputs.submodules }}
-
     - name: Run protolint
       uses: yoheimuta/action-protolint@e62319541dc5107df5e3a5010acb8987004d3d25 # v1.3.0
       with:
         fail_on_error: true
         filter_mode: nofilter
-        github_token: ${{ inputs.api_token }}
+        github_token: ${{ inputs.github_token }}
         protolint_flags: ${{ inputs.protolint_flags }}
         protolint_version: ${{ inputs.protolint_version }}
         reporter: github-check
