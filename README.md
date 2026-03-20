@@ -41,3 +41,14 @@ jobs:
           protolint_flags: "-config_path=.github/protolint.yaml proto/"
           protolint_version: "v0.46.0"
 ```
+
+## Security
+
+`protolint` reads its configuration from the checked-out repository. In a
+`pull_request_target` workflow this action is only safe as long as the checkout
+uses the default event ref, which resolves to the base branch.
+
+Do not use this action with `pull_request_target` if your workflow checks out
+untrusted PR code or otherwise overrides the checkout ref to the PR head. In
+that case, a PR can provide a malicious `.protolint.yaml` that changes how
+`protolint` runs.
