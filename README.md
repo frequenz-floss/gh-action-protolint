@@ -10,7 +10,7 @@ Here is an example demonstrating how to use it in a workflow:
 jobs:
   protolint:
     name: Check proto files with protolint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Run protolint
@@ -29,7 +29,7 @@ You can change those defaults using custom inputs. For example:
 jobs:
   protolint:
     name: Check proto files with protolint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Run protolint
